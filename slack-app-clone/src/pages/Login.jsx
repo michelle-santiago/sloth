@@ -1,18 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { loginFields } from "../constants/formFields"
-import { sign_in } from '../hooks/api';
-
+import { sign_in } from '../hooks/useApi';
+import { useNavigate } from "react-router-dom";
 const fields = loginFields;
 let fieldsState = {};
 fields.forEach(field  => fieldsState[field.id] = '');
 
 const Login = () => {
-
     const [ loginState, setLoginState ] = useState(fieldsState);
+    const navigate = useNavigate();
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        sign_in(loginState.emailAddress, loginState.password);
+        sign_in(loginState.emailAddress, loginState.password,navigate);
     }
+
     const handleChange = (e) => {
         setLoginState({...loginState, [e.target.id] : e.target.value})
     }

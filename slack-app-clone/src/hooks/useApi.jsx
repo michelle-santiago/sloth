@@ -1,6 +1,6 @@
-import React from 'react'
 const url = 'http://206.189.91.54/api/v1'
-const sign_in = (email, password) => {
+let headers;
+const sign_in = (email, password,navigate) => {
 
         fetch(`${url}/auth/sign_in`, {
         
@@ -15,7 +15,7 @@ const sign_in = (email, password) => {
         })
           .then((res) => {
           console.log(res)
-           const headers={
+           headers={
               'access-token': res.headers.get('access-token'),
               'client': res.headers.get('client'),
               'expiry': res.headers.get('expiry'),
@@ -25,7 +25,13 @@ const sign_in = (email, password) => {
             return res.json()
           })
           .then((data) => {
-            console.log(data)
+            if(data.success===false){
+                alert(data.errors[0])
+            }else{
+                localStorage.setItem("loggedInUser", JSON.stringify(headers));
+                alert("Login Successful")
+                navigate("/chat")
+            }
           })
 }
 
