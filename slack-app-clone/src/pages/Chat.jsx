@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 import useProfile from '../hooks/useProfile';
 const Chat = () => {
   const navigate=useNavigate();
-  const { user } = useProfile();
+  const { user }=useProfile();
   console.log("User check: ",user.uid);
+  //temporary
+  const userUID="michelle@email.com"
   const [dialogue, setDialogue] = useState({
     message: "",
     isLoading: false,
@@ -33,7 +35,7 @@ const logoutConfirmation = (confirm) => {
                 <h1 className="font-semibold text-xl leading-tight mb-1 truncate">Avion School</h1>
                 <div className="flex items-center m-2">
                     <svg className="h-2 w-2 fill-current text-green mr-2" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
-                    <span className="text-white opacity-50 text-sm">{user.uid.toUpperCase()}</span>
+                    <span className="text-white opacity-50 text-sm">{userUID.toUpperCase()}</span>
                 </div>
             </div>
             <div>
@@ -64,7 +66,7 @@ const logoutConfirmation = (confirm) => {
             </div>
             <div className="flex items-center mb-3 px-4">
                 <svg className="h-2 w-2 fill-current text-green mr-2" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
-                <span className="text-white opacity-75">{user.uid}<span className="text-grey text-sm">(you)</span></span>
+                <span className="text-white opacity-75">{userUID}<span className="text-grey text-sm">(you)</span></span>
             </div>
             <div className="flex items-center mb-3 px-4">
                 <svg className="h-2 w-2 fill-current text-green mr-2" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
