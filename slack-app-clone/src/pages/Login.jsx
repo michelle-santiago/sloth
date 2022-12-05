@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { loginFields } from "../constants/formFields"
-import {sign_in} from '../hooks/api';
+import { sign_in } from '../hooks/useApi';
 import { useNavigate } from "react-router-dom";
 const fields = loginFields;
 let fieldsState = {};
@@ -13,7 +13,6 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         sign_in(loginState.emailAddress, loginState.password,navigate);
-        
     }
 
     const handleChange = (e) => {
