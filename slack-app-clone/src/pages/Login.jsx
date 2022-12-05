@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { loginFields } from "../constants/formFields"
 import { sign_in } from '../hooks/useApi';
 import { useNavigate } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 const fields = loginFields;
 let fieldsState = {};
 fields.forEach(field  => fieldsState[field.id] = '');
@@ -45,7 +46,12 @@ const Login = () => {
                     <button type="submit" className="inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 bg-slate-900 text-white hover:bg-slate-700 w-full" onSubmit={ handleSubmit }>
                         Login
                     </button>
-                    
+                    <div class="pt-5 space-y-4 text-sm text-gray-900 sm:flex sm:items-center sm:justify-center sm:space-y-0 sm:space-x-4">
+                        <p class="text-center sm:text-left">Don't have an account?</p>
+                        <NavLink  to="/signUp"  className="inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 text-slate-900 ring-1 ring-slate-900/10 hover:ring-slate-900/20">
+                            Sign Up
+                        </NavLink>
+                    </div>
                 </form>
             </div>
         </div>
