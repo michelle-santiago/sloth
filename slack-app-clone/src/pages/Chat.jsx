@@ -1,11 +1,11 @@
 import React,{ useState} from 'react'
 import Dialog from "../components/common/Dialog"
 import { useNavigate } from "react-router-dom";
-import useProfile from '../hooks/useProfile';
+import useUserApi from '../hooks/useUserApi';
 const Chat = () => {
   const navigate=useNavigate();
-  const { user }=useProfile();
-  console.log("User check: ",user.uid);
+  const { userAuth }=useUserApi();
+  console.log("User check: ",userAuth.uid);
   //temporary
   const userUID="michelle@email.com"
   const [dialogue, setDialogue] = useState({
@@ -17,7 +17,7 @@ const Chat = () => {
   };
 const logoutConfirmation = (confirm) => {
     if (confirm) {
-        localStorage.removeItem("loggedInUser");
+        sessionStorage.removeItem("loggedInUserAuth");
         navigate("/login");
     } else {
       handleDialog("", false);
@@ -29,13 +29,13 @@ const logoutConfirmation = (confirm) => {
   };
   return (
     <div className="h-screen flex">
-    <div className="bg-primary flex-none w-64 pb-6 hidden md:block">
+    <div className="bg-primary flex-none w-64 pb-6">
         <div className="text-white mb-2 mt-3 px-4 flex justify-between">
             <div className="flex-auto">
                 <h1 className="font-semibold text-xl leading-tight mb-1 truncate">Avion School</h1>
                 <div className="flex items-center m-2">
                     <svg className="h-2 w-2 fill-current text-green mr-2" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
-                    <span className="text-white opacity-50 text-sm">{userUID.toUpperCase()}</span>
+                    <span className="text-white opacity-50 text-sm">{userAuth.uid.toUpperCase()}</span>
                 </div>
             </div>
             <div>
@@ -66,7 +66,7 @@ const logoutConfirmation = (confirm) => {
             </div>
             <div className="flex items-center mb-3 px-4">
                 <svg className="h-2 w-2 fill-current text-green mr-2" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
-                <span className="text-white opacity-75">{userUID}<span className="text-grey text-sm">(you)</span></span>
+                <span className="text-white opacity-75">{userAuth.uid}<span className="text-grey text-sm">(you)</span></span>
             </div>
             <div className="flex items-center mb-3 px-4">
                 <svg className="h-2 w-2 fill-current text-green mr-2" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>

@@ -1,17 +1,12 @@
-import React, {useState} from "react";
-import { Outlet, Navigate, NavLink } from "react-router-dom";
-import  useProfile,{ ProfileContext} from '../../hooks/useProfile';
+import React from "react";
+import { Navigate} from "react-router-dom";
 import Chat from "../../pages/Chat";
 
 const ProtectedRoutes = () => {
-  const {user, setUser} = useProfile();
-  const auth = localStorage.getItem("loggedInUser")
+  const auth = sessionStorage.getItem("loggedInUserAuth")
   return auth ? 
       <>  
-          <ProfileContext.Provider value={{ user, setUser }}>
-            <Chat/>
-          </ProfileContext.Provider>
-
+        <Chat/>
       </>
       : <Navigate to="/login"/>
 }
