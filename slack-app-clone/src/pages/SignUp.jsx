@@ -1,22 +1,35 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import { signupFields } from "../constants/formFields"
-import { sign_up } from '../hooks/useApi';
+import { signUp } from '../api/api';
 import { NavLink } from 'react-router-dom';
+
 const fields = signupFields;
 let fieldsState = {};
 fields.forEach(field  => fieldsState[field.id] = '');
 
 const SignUp = () => {
+    const navigate = useNavigate();
     const [ registerState, setRegisterState ] = useState(fieldsState);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        sign_up(registerState.emailAddress, registerState.password);
+        signUp({
+            email: registerState.emailAddress,
+            password: registerState.password,
+            password_confirmation: registerState.confirmPassword,
+        })
+			.then(res => {
+				navigate("/login");
+			}).catch(err => {
+				console.log(err.response.data.errors.full_messages)
+			})
     }
 
     const handleChange = (e) => {
       setRegisterState({...registerState, [e.target.id] : e.target.value})
     }
+
     return (
      <>
         <div className="min-h-full h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 z-9">

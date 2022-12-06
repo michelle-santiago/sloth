@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { loginFields } from "../constants/formFields"
-import { sign_in } from '../hooks/useApi';
+import { signIn } from '../api/api';
 import { useNavigate } from "react-router-dom";
 import { NavLink } from 'react-router-dom';
+import { UserContext } from "../hooks/UserContext";
+
 const fields = loginFields;
 let fieldsState = {};
 fields.forEach(field  => fieldsState[field.id] = '');
@@ -10,10 +12,33 @@ fields.forEach(field  => fieldsState[field.id] = '');
 const Login = () => {
     const [ loginState, setLoginState ] = useState(fieldsState);
     const navigate = useNavigate();
+    const {
+		updateLoginInfoHeader,
+		setId,
+	} = useContext(UserContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        sign_in(loginState.emailAddress, loginState.password,navigate);
+        signIn({
+            email: loginState.emailAddress,
+            password: loginState.password,
+        })
+            .then((res) => {
+                sessionStorage.setItem("loggedInUserAuth", JSON.stringify(headers));
+                updateLoginInfoHeader({
+					"access-token": res.headers.get("access-token"),
+					client: res.headers.get("client"),
+					expiry: res.headers.get("expiry"),
+					uid: res.headers.get("uid"),
+				});
+				setId(res.data.data.id);
+				alert("Login Successful");
+                navigate("/home");
+            })
+
+			.catch((err) => {
+				console.log("Error: ", err)
+			});
     }
 
     const handleChange = (e) => {
@@ -48,7 +73,7 @@ const Login = () => {
                     </button>
                     <div className="pt-5 space-y-4 text-sm text-gray-900 sm:flex sm:items-center sm:justify-center sm:space-y-0 sm:space-x-4">
                         <p className="text-center sm:text-left">Don't have an account?</p>
-                        <NavLink  to="/signUp"  className="inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 text-slate-900 ring-1 ring-slate-900/10 hover:ring-slate-900/20">
+                        <NavLink  to="/signup"  className="inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 text-slate-900 ring-1 ring-slate-900/10 hover:ring-slate-900/20">
                             Sign Up
                         </NavLink>
                     </div>
