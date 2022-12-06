@@ -1,4 +1,4 @@
-import useProfile from '../hooks/useProfile';
+import useProfile from './useUserApi';
 const url = 'http://206.189.91.54/api/v1'
 let headers;
 
@@ -30,7 +30,7 @@ const sign_in = (email, password,navigate) => {
     if(data.success===false){
         alert(data.errors[0])
     }else{
-        localStorage.setItem("loggedInUser", JSON.stringify(headers));
+        sessionStorage.setItem("loggedInUserAuth", JSON.stringify(headers));
         alert("Login Successful")
         navigate("/chat")
     }
