@@ -8,11 +8,11 @@ const Home = () => {
     <>  
         <div className="h-screen flex flex-col">
             <div className='w-full'>
-            <Navbar/>
+                <Navbar/>
             </div>
             <div className='flex h-full'>
-            <Sidebar/>
-            <Chat/>
+                <Sidebar/>
+                <Chat/>
             </div>
         </div>
     </>

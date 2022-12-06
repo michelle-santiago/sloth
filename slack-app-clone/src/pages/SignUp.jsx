@@ -44,8 +44,8 @@ const SignUp = () => {
                     <button type="submit" className="inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 bg-slate-900 text-white hover:bg-slate-700 w-full" onSubmit={ handleSubmit }>
                         Sign Up
                     </button>
-                    <div class="pt-5 space-y-4 text-sm text-gray-900 sm:flex sm:items-center sm:justify-center sm:space-y-0 sm:space-x-4">
-                        <p class="text-center sm:text-left">Already have an account?</p>
+                    <div className="pt-5 space-y-4 text-sm text-gray-900 sm:flex sm:items-center sm:justify-center sm:space-y-0 sm:space-x-4">
+                        <p className="text-center sm:text-left">Already have an account?</p>
                         <NavLink  to="/login"  className="inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 text-slate-900 ring-1 ring-slate-900/10 hover:ring-slate-900/20">
                             Login
                         </NavLink>

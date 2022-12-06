@@ -8,7 +8,7 @@ const Chat = () => {
         <>
         {/* Chat content */}
         <div className="flex-1 flex flex-col bg-white overflow-hidden">
-                {/* Channels*/}
+                {/* Channel*/}
                 <div className="border-b flex px-6 py-2 items-center flex-none">
                     <div className="flex flex-col">
                         <h3 className="text-grey-darkest mb-1 font-extrabold">#general</h3>
