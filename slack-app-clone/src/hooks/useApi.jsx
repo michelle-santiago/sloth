@@ -1,4 +1,4 @@
-import useProfile from './useUserApi';
+import useUserApi from './useUserApi';
 const url = 'http://206.189.91.54/api/v1'
 let headers;
 
@@ -32,7 +32,7 @@ const sign_in = (email, password,navigate) => {
     }else{
         sessionStorage.setItem("loggedInUserAuth", JSON.stringify(headers));
         alert("Login Successful")
-        navigate("/chat")
+        navigate("/home")
     }
   })
 }
