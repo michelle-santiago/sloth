@@ -4,7 +4,6 @@ import { signIn } from '../api/api';
 import { useNavigate } from "react-router-dom";
 import { NavLink } from 'react-router-dom';
 import { UserContext } from "../hooks/UserContext";
-
 const fields = loginFields;
 let fieldsState = {};
 fields.forEach(field  => fieldsState[field.id] = '');
@@ -13,33 +12,31 @@ const Login = () => {
     const [ loginState, setLoginState ] = useState(fieldsState);
     const navigate = useNavigate();
     const {
-		updateLoginInfoHeader,
+		updateUserAuthHeader,
 		setId,
 	} = useContext(UserContext);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        signIn({
-            email: loginState.emailAddress,
-            password: loginState.password,
+    const handleSubmit = async (e) => {
+		e.preventDefault();
+		signIn({
+			email: loginState.emailAddress,
+			password: loginState.password,
+		})
+        .then((res) => {
+            updateUserAuthHeader({
+                "access-token":  res["access-token"],
+                client: res.client,
+                expiry: res.expiry,
+                uid: res.uid,
+            });
+            setId(res.data.data.id);
+            alert("Login Successful");
+            navigate("/home");
         })
-            .then((res) => {
-                sessionStorage.setItem("loggedInUserAuth", JSON.stringify(headers));
-                updateLoginInfoHeader({
-					"access-token": res.headers.get("access-token"),
-					client: res.headers.get("client"),
-					expiry: res.headers.get("expiry"),
-					uid: res.headers.get("uid"),
-				});
-				setId(res.data.data.id);
-				alert("Login Successful");
-                navigate("/home");
-            })
-
-			.catch((err) => {
-				console.log("Error: ", err)
-			});
-    }
+        .catch((err) => {
+            alert(err.response.data.errors[0])
+        });
+	};
 
     const handleChange = (e) => {
         setLoginState({...loginState, [e.target.id] : e.target.value})
