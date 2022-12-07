@@ -9,17 +9,17 @@ module.exports = {
     themes: [
       {
         slack: {
-          "primary": "#611f69",
+          "primary": "#3f0e40",
                   
-          "secondary": "#c41328",
+          "secondary": "#350d36",
                   
-          "accent": "#6fbbdb",
+          "accent": "#522653",
                   
           "neutral": "#3B243D",
                   
           "base-100": "#ffffff",
                   
-          "info": "#5D9CDF",
+          "info": "#5d3d5e",
                   
           "success": "#22B469",
                   

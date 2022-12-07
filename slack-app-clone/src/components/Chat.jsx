@@ -19,16 +19,26 @@ const Chat = () => {
 				<div className="px-6 py-4 flex-1 overflow-y-scroll">
 					{/* Message */}
 					<div className="flex items-start mb-4 text-sm">
+                        <div className="avatar placeholder px-2">
+                            <div className="bg-white-focus border  bg-base-300 text-neutral-content rounded-xl w-10 h-10">
+                                <span className="text-primary">C</span>
+                            </div>
+                        </div> 
 						<div className="flex-1 overflow-hidden">
 							<div>
 								<span className="font-bold">Chuchu </span>
 								<span className="text-grey text-xs">11:46</span>
 							</div>
-							<p className="text-black leading-normal">Hello</p>
+							<p className="text-black leading-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec hendrerit massa. Nulla vehicula odio diam, ut posuere nulla dictum ut. Quisque est sem, pellentesque eu porttitor id, imperdiet vel mauris. Praesent feugiat purus eros, quis convallis enim sagittis in. Pellentesque rutrum pellentesque volutpat. Integer quis lacus vehicula, luctus quam eu, condimentum tortor. Aenean mattis sit amet nibh sit amet aliquet. In imperdiet metus sed sapien aliquet, eget finibus lacus tempor. Sed id mi dignissim, blandit ex eu, cursus magna. </p>
 						</div>
 					</div>
 					{/* Message */}
 					<div className="flex items-start mb-4 text-sm">
+                        <div className="avatar placeholder px-2">
+                            <div className="bg-white-focus border  bg-base-300 text-neutral-content rounded-xl w-10 h-10">
+                                <span className="text-primary">C</span>
+                            </div>
+                        </div> 
 						<div className="flex-1 overflow-hidden">
 							<div>
 								<span className="font-bold">Chacha </span>
