@@ -2,8 +2,9 @@ import React, { useContext, useState } from "react";
 import { UserContext } from "../hooks/UserContext";
 import AddChannel from "./common/AddChanel";
 const Sidebar = () => {
-	const { userAuth } = useContext(UserContext);
-	console.log("User check: ", userAuth.uid);
+	const { userAuthHeader } = useContext(UserContext);
+    const user=userAuthHeader;
+	console.log("User check side: ", user.uid);
 
 	return (
 		<div className="bg-primary flex-none w-64 pb-6">
@@ -14,14 +15,14 @@ const Sidebar = () => {
 						<svg className="h-2 w-2 fill-current text-green mr-2" viewBox="0 0 20 20">
 							<circle cx="10" cy="10" r="10" />
 						</svg>
-						<span className="text-white opacity-50 text-sm">{userAuth.uid.toUpperCase()}</span>
+						<span className="text-white opacity-50 text-sm">{user.uid.toUpperCase()}</span>
 					</div>
 				</div>
 				<div>
 					<svg className="h-6 w-6 fill-current text-white opacity-25" viewBox="0 0 20 20">
 						<path
 							d="M14 8a4 4 0 1 0-8 0v7h8V8zM8.027 2.332A6.003 6.003 0 0 0 4 8v6l-3 2v1h18v-1l-3-2V8a6.003 6.003 0 0 0-4.027-5.668 2 2 0 1 0-3.945 0zM12 18a2 2 0 1 1-4 0h4z"
-							fill-rule="evenodd"
+							fillRule="evenodd"
 						/>
 					</svg>
 				</div>
@@ -59,7 +60,7 @@ const Sidebar = () => {
 						<circle cx="10" cy="10" r="10" />
 					</svg>
 					<span className="text-white opacity-75">
-						{userAuth.uid}
+						{user.uid}
 						<span className="text-grey text-sm">(you)</span>
 					</span>
 				</div>

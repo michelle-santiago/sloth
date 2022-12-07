@@ -4,6 +4,8 @@ import { signIn } from '../api/api';
 import { useNavigate } from "react-router-dom";
 import { NavLink } from 'react-router-dom';
 import { UserContext } from "../hooks/UserContext";
+import toast, { Toaster } from 'react-hot-toast';
+
 const fields = loginFields;
 let fieldsState = {};
 fields.forEach(field  => fieldsState[field.id] = '');
@@ -24,17 +26,17 @@ const Login = () => {
 		})
         .then((res) => {
             updateUserAuthHeader({
-                "access-token":  res["access-token"],
-                client: res.client,
-                expiry: res.expiry,
-                uid: res.uid,
+                "access-token":  res.headers["access-token"],
+                client: res.headers.client,
+                expiry: res.headers.expiry,
+                uid: res.headers.uid,
             });
             setId(res.data.data.id);
-            alert("Login Successful");
+            toast.success("Login Successful")
             navigate("/home");
         })
         .catch((err) => {
-            alert(err.response.data.errors[0])
+            toast.error(err.response.data.errors[0])
         });
 	};
 
@@ -48,9 +50,9 @@ const Login = () => {
                 <h1 className="">Log in to your slack account</h1>
                 <form className="w-full max-w-sm" onSubmit={handleSubmit}>
                     <div className="mb-6">
-                        {fields.map(field =>
-                        <>
-                            <label htmlFor={field.labelFor} className="block text-sm font-semibold leading-6 text-gray-900">
+                        {fields.map((field,index) =>
+                        <div key={index}>
+                            <label htmlFor={field.labelFor}  className="block text-sm font-semibold leading-6 text-gray-900">
                                 {field.labelText}
                             </label>
                             <input
@@ -62,7 +64,7 @@ const Login = () => {
                                 className="mt-2 appearance-none text-slate-900 bg-white rounded-md block w-full px-3 h-10 shadow-sm sm:text-sm focus:outline-none placeholder:text-slate-400 focus:ring-2 focus:ring-sky-500 ring-1 ring-slate-200"
                                 placeholder={field.placeholder}
                             />
-                        </>
+                        </div>
                         )}
                     </div>
                     <button type="submit" className="inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 bg-slate-900 text-white hover:bg-slate-700 w-full" onSubmit={ handleSubmit }>
@@ -76,7 +78,9 @@ const Login = () => {
                     </div>
                 </form>
             </div>
+            <Toaster position="top-center" reverseOrder={false}/>
         </div>
+        
     </>
     )
     

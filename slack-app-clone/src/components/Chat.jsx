@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { UserContext } from "../hooks/UserContext";
 
 const Chat = () => {
-	const { userAuth } = useContext(UserContext);
-	console.log("User check: ", userAuth.uid);
+	const { userAuthHeader } = useContext(UserContext);
+	console.log("User check: ", userAuthHeader.uid);
 	return (
 		<>
 			{/* Chat content */}

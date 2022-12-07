@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { signupFields } from "../constants/formFields"
 import { signUp } from '../api/api';
 import { NavLink } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 const fields = signupFields;
 let fieldsState = {};
@@ -20,9 +21,17 @@ const SignUp = () => {
             password_confirmation: registerState.confirmPassword,
         })
 			.then(res => {
-				navigate("/login");
+                toast.success("Sign Up Successful")				
+                //navigate("/login");
 			}).catch(err => {
-				console.log(err.response.data.errors.full_messages)
+                let errors=err.response.data.errors.full_messages
+                if(errors.length>1){
+                    errors.forEach((error)=>{
+                        toast.error(error)
+                    })
+                }else{
+                    toast.error(errors)
+                }
 			})
     }
 
@@ -37,8 +46,8 @@ const SignUp = () => {
                 <h1 className="">Create your slack account</h1>
                 <form className="w-full max-w-sm" onSubmit={handleSubmit}>
                     <div className="mb-6">
-                        {fields.map(field =>
-                        <>
+                        {fields.map((field,index) =>
+                        <div key={index}>
                             <label htmlFor={field.labelFor} className="block text-sm font-semibold leading-6 text-gray-900">
                                 {field.labelText}
                             </label>
@@ -51,7 +60,7 @@ const SignUp = () => {
                                 className="mt-2 appearance-none text-slate-900 bg-white rounded-md block w-full px-3 h-10 shadow-sm sm:text-sm focus:outline-none placeholder:text-slate-400 focus:ring-2 focus:ring-sky-500 ring-1 ring-slate-200"
                                 placeholder={field.placeholder}
                             />
-                        </>
+                        </div>
                         )}
                     </div>
                     <button type="submit" className="inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 bg-slate-900 text-white hover:bg-slate-700 w-full" onSubmit={ handleSubmit }>
@@ -65,6 +74,7 @@ const SignUp = () => {
                     </div>
                 </form>
             </div>
+            <Toaster position="top-center" reverseOrder={false}/>
         </div>
     </>
     )

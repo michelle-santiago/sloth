@@ -3,7 +3,7 @@ import Sidebar from '../components/Sidebar';
 import Chat from '../components/Chat';
 import Navbar from '../components/Navbar';
 const Home = () => {
-
+  
   return (
     <>  
         <div className="h-screen flex flex-col">

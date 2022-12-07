@@ -1,5 +1,4 @@
 import React, { useState, createContext } from "react";
-
 export let UserContext = createContext({});
 
 export const UserContextProvider = ({ children }) => {
@@ -18,7 +17,7 @@ export const UserContextProvider = ({ children }) => {
 
     const [id, setId] = useState("");
 
-    console.log("User check",userAuth)
+    console.log("User check",userAuthHeader)
     return (
         <UserContext.Provider
             value={{
