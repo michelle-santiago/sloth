@@ -3,8 +3,10 @@ export let UserContext = createContext({});
 
 export const UserContextProvider = ({ children }) => {
     const userAuthenticated = JSON.parse(sessionStorage.getItem("loggedInUserAuth"))
+    const userChannel = JSON.parse(sessionStorage.getItem("userChannels"))
     const [ userAuth, setUserAuth ] = useState(!userAuthenticated ? {} : userAuthenticated);
     const [ userAuthHeader, setUserAuthHeader ] =  useState(!userAuthenticated ? {} : userAuthenticated);
+    const [ channel, setChannel]=useState(!userChannel ? [] : userChannel)
 
     const updateUserAuthHeader = (info) => {
 		sessionStorage.setItem("loggedInUserAuth", JSON.stringify(info));
@@ -23,7 +25,9 @@ export const UserContextProvider = ({ children }) => {
                 setUserAuthHeader,
                 updateUserAuthHeader,
                 id,
-                setId
+                setId,
+                channel,
+                setChannel
             }}
         >
             { children }
