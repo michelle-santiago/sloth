@@ -4,11 +4,7 @@ export let UserContext = createContext({});
 export const UserContextProvider = ({ children }) => {
     const userAuthenticated = JSON.parse(sessionStorage.getItem("loggedInUserAuth"))
     const [ userAuth, setUserAuth ] = useState(!userAuthenticated ? {} : userAuthenticated);
-    const [ userAuthHeader, setUserAuthHeader ] = useState(
-		!sessionStorage.getItem("authHeader")
-			? {}
-			: JSON.parse(sessionStorage.getItem("authHeader"))
-	);
+    const [ userAuthHeader, setUserAuthHeader ] =  useState(!userAuthenticated ? {} : userAuthenticated);
 
     const updateUserAuthHeader = (info) => {
 		sessionStorage.setItem("loggedInUserAuth", JSON.stringify(info));
