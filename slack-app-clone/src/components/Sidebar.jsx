@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../hooks/UserContext";
 import AddChannel from "./common/AddChanel";
-import { retrieveChannels } from "../api/api";
+import { retrieveChannels, retrieveDirectMsg } from "../api/api";
 const Sidebar = () => {
-	const { userAuthHeader, channel, setChannel } = useContext(UserContext);
+	const { userAuthHeader, channel, setChannel, chat, setChat,id } = useContext(UserContext);
     const user=userAuthHeader;
 	console.log("User check side: ", user.uid);
     console.log("channel: ",channel)
@@ -17,6 +17,18 @@ const Sidebar = () => {
         .catch((err) => {
             toast.error(err.response.data.errors[0])
         });
+        
+        retrieveDirectMsg(user,id,"User")
+        .then((res) => {
+           console.log("response msg:",res.data)
+        })
+        .then((data) => {
+            console.log("message data",data)
+          })  
+        .catch((err) => {
+            toast.error(err.response.data.errors[0])
+        });
+       
     },[])
 	return (
 		<div className="bg-primary flex-none w-64 pb-6">
@@ -26,7 +38,7 @@ const Sidebar = () => {
 				</div>
 				<div className="cursor-pointer bg-white rounded-full avatar p-1">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                        <path strokeLinecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                     </svg>
 				</div>
 			</div>

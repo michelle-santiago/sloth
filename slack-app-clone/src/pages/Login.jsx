@@ -32,6 +32,7 @@ const Login = () => {
                 uid: res.headers.uid,
             });
             setId(res.data.data.id);
+            sessionStorage.setItem("userID", JSON.stringify(res.data.data.id));
             toast.success("Login Successful")
             navigate("/home");
         })
