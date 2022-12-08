@@ -23,14 +23,14 @@ const loginFields = [
 
 const signupFields = [
     {
-        labelText: "Email address",
+        labelText: "Email Address",
         labelFor: "email-address",
         id: "emailAddress",
         name: "email",
         type: "email",
         autoComplete: "email",
         isRequired: true,
-        placeholder: "Email address"   
+        placeholder: "Email Address"   
     },
     {
         labelText: "Password",
@@ -41,6 +41,16 @@ const signupFields = [
         autoComplete: "current-password",
         isRequired: true,
         placeholder: "Password"   
+    },
+    {
+        labelText: "Confirm Password",
+        labelFor: "password",
+        id: "confirmPassword",
+        name: "password",
+        type: "password",
+        autoComplete: "confirm-password",
+        isRequired: true,
+        placeholder: "Confirm Password"   
     },
 ]
 export { loginFields, signupFields }
