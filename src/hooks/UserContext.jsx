@@ -8,7 +8,7 @@ export const UserContextProvider = ({ children }) => {
     const userID = JSON.parse(sessionStorage.getItem("userID"))
     const usersData = JSON.parse(sessionStorage.getItem("usersData"))
     const userSelectedData = JSON.parse(sessionStorage.getItem("userSelected"))
-    const usersSelectedData = JSON.parse(localStorage.getItem("usersSelected"))
+    const usersSelectedData = JSON.parse(sessionStorage.getItem("usersSelected"))
     const chatTypeData = JSON.parse(sessionStorage.getItem("chatTypeData"))
     const chatData = JSON.parse(sessionStorage.getItem("chatData"))
     const [ userAuth, setUserAuth ] = useState(!userAuthenticated ? {} : userAuthenticated);

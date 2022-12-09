@@ -3,10 +3,11 @@ import { UserContext } from "../hooks/UserContext";
 import AddChannel from "./common/AddChanel";
 import { retrieveChannels, retrieveDirectMsg } from "../api/api";
 const Sidebar = () => {
-	const { userAuthHeader, channel, setChannel, setChatType, setChannelSelected,chat, setChat,id } = useContext(UserContext);
+	const { userAuthHeader, channel, setChannel, setChatType, setChannelSelected, setChat, usersSelected, setUserSelected, setUsersSelected } = useContext(UserContext);
     const user=userAuthHeader;
 	//console.log("User check side: ", user.uid);
     //console.log("channel: ",channel)
+	//console.log("selected users:", usersSelected)
     useEffect(()=>{
         retrieveChannels(user)
         .then((res) => {
@@ -19,6 +20,7 @@ const Sidebar = () => {
         });
        
     },[])
+	
 	const handleSelectedChannel=(channel)=>{
 		setChatType("Channel")
 		sessionStorage.setItem("chatTypeData", JSON.stringify("Channel"));
@@ -36,7 +38,35 @@ const Sidebar = () => {
 		.catch((err) => {
 			console.log(err[0])
 		});
-
+	  }
+	  const handleSelectedUser=(user)=>{
+		setChatType("User")
+		sessionStorage.setItem("chatTypeData", JSON.stringify("User"));
+		//console.log("receiver id",user.id)
+		//console.log("receiver email",user.uid)
+		setUserSelected(user)
+		sessionStorage.setItem("userSelected", JSON.stringify(user));
+	
+		retrieveDirectMsg(userAuthHeader,user.id,"User")
+		.then((res) => {
+		  //console.log("RESPONSE MSG:",res.data)
+		  setChat(res.data)
+		  sessionStorage.setItem("chatData", JSON.stringify(res.data));
+		})
+		.catch((err) => {
+			console.log(err[0])
+		});
+	  }
+	  const handleDeleteSelectedUser=(userData)=>{
+		setChatType("")
+		setChat([])
+		const filteredUsers=usersSelected.filter((user)=>{
+            return user.id !== userData.id
+        })
+		console.log("filtered",filteredUsers)
+        setUsersSelected(filteredUsers);
+        sessionStorage.setItem("usersSelected", JSON.stringify(filteredUsers));
+		
 	  }
 	return (
 		<div className="bg-primary flex-none w-64 pb-6">
@@ -63,7 +93,7 @@ const Sidebar = () => {
 						</svg>
 					</label>
 				</div>
-				<div className="h-40 overflow-y-scroll mr-1">
+				<div className="h-50 overflow-y-scroll mr-1">
 					<ul>
 						{channel.length!==0&&channel.map((channel,index) => {
 							return (
@@ -80,7 +110,6 @@ const Sidebar = () => {
 											</div>
 									</div>
 								</li>
-							
 							)
 						})}
 					</ul>
@@ -90,23 +119,38 @@ const Sidebar = () => {
 				<div className="px-4 mb-2 text-white flex justify-between items-center">
 					<div className="opacity-75">Direct Messages</div>
 				</div>
-				<div className="flex items-center mb-3 px-4">
-					<svg className="h-2 w-2 fill-current text-green mr-2" viewBox="0 0 20 20">
-						<circle cx="10" cy="10" r="10" />
-					</svg>
-					<span className="text-white opacity-75">
-						{user.uid}
-						<span className="text-grey text-sm">(you)</span>
-					</span>
-				</div>
-				<div className="flex items-center mb-3 px-4">
-					<svg className="h-2 w-2 fill-current text-green mr-2" viewBox="0 0 20 20">
-						<circle cx="10" cy="10" r="10" />
-					</svg>
-					<span className="text-white opacity-75">test@email.com</span>
-				</div>
+				<div className="h-50 overflow-y-scroll mr-1">
+					<ul>
+						{usersSelected.length!==0&&usersSelected.map((user,index) => {
+							return (
+								<li key={index} className="cursor-pointer hover:bg-secondary">
+									<div className="flex flex-row">
+										<div className="px-4 py-1 text-white opacity-75" onClick={()=>{ handleSelectedUser(user)}}>
+											<div className="avatar placeholder">
+												<div className="bg-white-focus border  bg-base-300 text-neutral-content rounded w-5 h-5">
+													<span className="text-primary text-xs">{user.uid.toUpperCase().charAt(0)}</span>
+												</div>
+											</div> 
+										</div>
+										<div className="bg-teal-dark py-1 text-white opacity-75 w-[65%]" >
+											<div className="flex flex-row gap-2">
+												<span className="truncate" onClick={()=>{ handleSelectedUser(user)}} >{user.uid}</span>	
+												<div className="bg-secondary hover:bg-base-300"  onClick={()=>{ handleDeleteSelectedUser(user)}}>
+													<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+														<path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+													</svg>
+												</div>
+											</div>
+										</div>
+										
+									</div>
+								</li>
+							)
+						})}
+					</ul>
+				 </div>	
 			</div>
-
+		
 			<AddChannel />
 		</div>
 	);

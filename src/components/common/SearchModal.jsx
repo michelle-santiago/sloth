@@ -35,10 +35,21 @@ const SearchModal = () => {
     .catch((err) => {
         console.log(err[0])
     });
-    /*console.log(usersSelected)
-    usersSelected.push(user)
-    console.log(usersSelected)
-    console.log("bat anrami",user)*/
+    //console.log("before: ",usersSelected)
+    let found=false;
+    if(usersSelected.length!==0){
+      usersSelected.forEach(userData => {
+        if(userData.id===user.id){
+          found=true;
+        }
+      });
+    }
+
+    if(found===false){
+      usersSelected.push(user)
+    }
+    //console.log("after:",usersSelected)
+    sessionStorage.setItem("usersSelected", JSON.stringify(usersSelected));
   }
   return (
     <>
