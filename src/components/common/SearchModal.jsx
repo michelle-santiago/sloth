@@ -3,7 +3,7 @@ import { UserContext } from '../../hooks/UserContext';
 import ProfileModal from './ProfileModal';
 import { retrieveDirectMsg} from "../../api/api";
 const SearchModal = () => {
-  const { userAuthHeader, users, setUserSelected, usersSelected, setUsersSelected, setChat } = useContext(UserContext);
+  const { userAuthHeader, users, setUserSelected, usersSelected, setUsersSelected, setChatType, setChat } = useContext(UserContext);
   const [ usersList, setUsersList ]=useState([])
   const handleSearch = (e) => {
     const search = e.target.value;
@@ -19,15 +19,16 @@ const SearchModal = () => {
     //console.log("usersData",usersResult)
   }
   const handleSelectedUser=(user)=>{
-    user.chatType="User";
-    console.log("receiver id",user.id)
-    console.log("receiver email",user.uid)
+    setChatType("User")
+    sessionStorage.setItem("chatTypeData", JSON.stringify("User"));
+    //console.log("receiver id",user.id)
+    //console.log("receiver email",user.uid)
     setUserSelected(user)
     sessionStorage.setItem("userSelected", JSON.stringify(user));
 
-    retrieveDirectMsg(userAuthHeader,user.id,user.chatType)
+    retrieveDirectMsg(userAuthHeader,user.id,"User")
     .then((res) => {
-      console.log("RESPONSE MSG:",res.data)
+      //console.log("RESPONSE MSG:",res.data)
       setChat(res.data)
       sessionStorage.setItem("chatData", JSON.stringify(res.data));
     })
