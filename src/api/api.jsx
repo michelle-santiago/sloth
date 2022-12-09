@@ -18,9 +18,13 @@ export const retrieveChannels = async (data) => {
 }
 
 export const retrieveDirectMsg= async (data,id,type) => {
-    console.log("data: ",data)
     const config = { method: "GET", headers: { "Content-Type": "application/json", ...data }};
-    const res = await fetch(`http://206.189.91.54/api/v1/messages?receiver_id=2966&receiver_class=${type}`, config)
-    console.log("res",res)
+    const res = await fetch(`http://206.189.91.54/api/v1/messages?receiver_id=${id}&receiver_class=${type}`, config)
+    return await res.json()
+}
+export const retrieveUsers = async (data) => {
+    const config = { method: "GET", headers: { "Content-Type": "application/json", ...data }};
+    const res = await fetch('http://206.189.91.54/api/v1/users', config)
+
     return await res.json()
 }

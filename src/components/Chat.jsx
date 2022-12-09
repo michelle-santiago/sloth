@@ -2,68 +2,74 @@ import React, { useContext } from "react";
 import { UserContext } from "../hooks/UserContext";
 
 const Chat = () => {
-	const { userAuthHeader } = useContext(UserContext);
-	console.log("User check: ", userAuthHeader.uid);
+	const { userSelected,channelSelected, chatType, chat  } = useContext(UserContext);
+	//console.log("chat type: ", chatType)
+	//console.log("chat: ", chat)
+	//console.log("channel: ", channelSelected)
 	return (
 		<>
+			{chatType!==""?
+			<>
 			{/* Chat content */}
-			<div className="flex-1 flex flex-col bg-white overflow-hidden">
-				{/* Channel*/}
-				<div className="border-b flex px-6 py-2 items-center flex-none">
-					<div className="flex flex-col">
-						<h3 className="text-grey-darkest mb-1 font-extrabold">#general</h3>
-						<div className="text-grey-dark text-sm truncate">Lorem impsum</div>
+				<div className="flex-1 flex flex-col bg-white pb-10">
+					{/* Channel/User */}
+					<div className="border-b flex px-6 py-2 items-center flex-none">
+						<div className="flex flex-col">
+							<h3 className="text-grey-darkest mb-1 font-extrabold">
+								{chatType==="User"&&userSelected.uid}
+								{chatType==="Channel"&&channelSelected.name}
+							</h3>
+							<div className="text-grey-dark text-sm truncate">Lorem impsum</div>
+						</div>
+					</div>
+					{/* Chat messages */}
+					<div className="px-6 py-4 flex-1 overflow-y-scroll">
+						{chat.map((message,index)=>{
+						return(
+							<div key={index}>
+								<div className="flex items-start mb-4 text-sm">
+									<div className="avatar placeholder px-2">
+										<div className="bg-white-focus border  bg-base-300 text-neutral-content rounded-xl w-10 h-10">
+											<span className="text-primary">{message.sender.uid.toUpperCase().charAt(0)}</span>
+										</div>
+									</div> 
+									<div className="flex-1 overflow-hidden">
+										<div className="flex flex-row gap-2">
+											<span className="font-bold">{message.sender.uid}</span>
+											<span className="text-grey text-xs pt-0.5">{message.created_at}</span>
+										</div>
+										<p className="text-black leading-normal">{message.body}</p>
+									</div>
+								</div>
+							</div>
+						)
+						})}
+						
+					</div>
+					<div className="px-7 bg-white border-t fixed bottom-0 w-full">
+						<div className="pt-2 pb-2  w-[80%] ">
+							<div className="flex rounded-lg border-2 border-grey overflow-hidden">
+								<input type="text" className="w-full px-4" placeholder="Message" />
+								<span className="text-3xl text-grey border-l-2 border-grey p-2">
+									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+										<path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+									</svg>
+								</span>
+							</div>
+						</div>
 					</div>
 				</div>
-				{/* Chat messages */}
-				<div className="px-6 py-4 flex-1 overflow-y-scroll">
-					{/* Message */}
-					<div className="flex items-start mb-4 text-sm">
-                        <div className="avatar placeholder px-2">
-                            <div className="bg-white-focus border  bg-base-300 text-neutral-content rounded-xl w-10 h-10">
-                                <span className="text-primary">C</span>
-                            </div>
-                        </div> 
-						<div className="flex-1 overflow-hidden">
-							<div>
-								<span className="font-bold">Chuchu </span>
-								<span className="text-grey text-xs">11:46</span>
-							</div>
-							<p className="text-black leading-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec hendrerit massa. Nulla vehicula odio diam, ut posuere nulla dictum ut. Quisque est sem, pellentesque eu porttitor id, imperdiet vel mauris. Praesent feugiat purus eros, quis convallis enim sagittis in. Pellentesque rutrum pellentesque volutpat. Integer quis lacus vehicula, luctus quam eu, condimentum tortor. Aenean mattis sit amet nibh sit amet aliquet. In imperdiet metus sed sapien aliquet, eget finibus lacus tempor. Sed id mi dignissim, blandit ex eu, cursus magna. </p>
-						</div>
-					</div>
-					{/* Message */}
-					<div className="flex items-start mb-4 text-sm">
-                        <div className="avatar placeholder px-2">
-                            <div className="bg-white-focus border  bg-base-300 text-neutral-content rounded-xl w-10 h-10">
-                                <span className="text-primary">C</span>
-                            </div>
-                        </div> 
-						<div className="flex-1 overflow-hidden">
-							<div>
-								<span className="font-bold">Chacha </span>
-								<span className="text-grey text-xs">12:45</span>
-							</div>
-							<p className="text-black leading-normal">Hello world</p>
-						</div>
-					</div>
-
-					<div className="pb-6 px-4 flex-none">
-						<div className="flex rounded-lg border-2 border-grey overflow-hidden">
-							<span className="text-3xl text-grey border-r-2 border-grey p-2">
-								<svg
-									className="fill-current h-6 w-6 block"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 20 20"
-								>
-									<path d="M16 10c0 .553-.048 1-.601 1H11v4.399c0 .552-.447.601-1 .601-.553 0-1-.049-1-.601V11H4.601C4.049 11 4 10.553 4 10c0-.553.049-1 .601-1H9V4.601C9 4.048 9.447 4 10 4c.553 0 1 .048 1 .601V9h4.399c.553 0 .601.447.601 1z" />
-								</svg>
-							</span>
-							<input type="text" className="w-full px-4" placeholder="Message #general" />
-						</div>
+			</>
+			:
+			<div className="flex-1 flex flex-col bg-white">
+				<div className="border-b flex px-6 py-2 items-center flex-none">
+					<div className="flex flex-col">
+						<h3 className="text-grey-darkest mb-1 font-extrabold">Welcome</h3>
+						<div className="text-grey-dark text-sm truncate"></div>
 					</div>
 				</div>
 			</div>
+			}
 		</>
 	);
 };
