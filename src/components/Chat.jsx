@@ -4,8 +4,10 @@ import ChatGroupByDate from "./common/ChatGroupByDate";
 import dateFormat from "./helper/dateFormat";
 import { sendMessage, retrieveMsg } from "../api/api";
 import toast, { Toaster } from 'react-hot-toast';
+import ChannelDetails from "./common/ChannelDetails";
+import getUid from "./helper/getUid";
 const Chat = () => {
-	const { userAuthHeader, userSelected,channelSelected, chatType, chat, setChat  } = useContext(UserContext);
+	const { userAuthHeader, users, userSelected, channelSelected,channelDetails, chatType, chat, setChat  } = useContext(UserContext);
 	const [messageBody, setMessageBody]=useState("")
 	const messagesEndRef = useRef(null)
 	const [scroll, setScroll]=useState(null)
@@ -55,10 +57,11 @@ const Chat = () => {
 	useEffect(() => {
 		scrollToBottom()
 	}, [chat, scroll]);
+
 	//sending message
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log("message body:", messageBody)
+		//console.log("message body:", messageBody)
 		if(messageBody===""||messageBody===" "){
 			toast.error("Please input a message")
 		}
@@ -90,6 +93,8 @@ const Chat = () => {
 	const handleChange = (e) => {
 		setMessageBody(e.target.value)
 	}
+	//channel details
+
 	return (
 		<>
 			{chatType!==""?
@@ -97,14 +102,42 @@ const Chat = () => {
 			{/* Chat content */}
 				<div className="flex-1 flex flex-col bg-white pb-10">
 					{/* Channel/User */}
-					<div className="border-b flex px-6 py-2 items-center flex-none">
-						<div className="flex flex-col">
-							<h3 className="text-grey-darkest mb-1 font-extrabold">
-								{chatType==="User"&&userSelected.uid}
-								{chatType==="Channel"&&channelSelected.name}
-							</h3>
-							<div className="text-grey-dark text-sm truncate">Lorem impsum</div>
+					<div className="border-b flex px-6 py-2 ">
+						<div className="flex flex-row items-space-between justify-center items-center w-full">
+							<div className="flex:1 w-full text-grey-darkest mb-1 cursor-pointer hover:text-info">
+								<span className="font-extrabold text-xl">
+									{chatType==="User"&&userSelected.uid}
+									{chatType==="Channel"&&
+										<label htmlFor="channel-details-modal">{channelSelected.name}</label>
+									}
+								</span>
+							</div>
+							
+							<label htmlFor="channel-details-modal" className="flex flex-row gap-2 border p-2 cursor-pointer hover:bg-base-200">
+								<div className="flex ">
+									{channelDetails.length!==0&&
+									channelDetails.channel_members.map((member,index)=>{
+										if(index===1||index===0||index===2){
+											return(
+												<div key={index}>
+													<div className="flex items-center bg-base-300 justify-center w-7 h-7 -mx-1 overflow-hidden rounded-xl border-2 border-white">
+														<span>{getUid(member.user_id).toUpperCase().charAt(0)}</span>
+													</div>
+												</div>
+											)
+										}
+										
+									})
+									}
+								</div>
+								<div className="flex justify-center items-center"> 
+								{chatType==="Channel"&&
+									<div className="text-grey-dark text-sm">{channelDetails.length!==0&&channelDetails.channel_members.length}</div>
+								}
+								</div>
+							</label>
 						</div>
+						
 					</div>
 					{/* Chat messages */}
 					<div className="px-6 py-4 flex-1 overflow-y-scroll pb-7">
@@ -119,8 +152,7 @@ const Chat = () => {
 									</div>
 								</div>
 								<hr className="-mt-3.5"></hr>
-								<ChatGroupByDate groupDate={date}/>
-								
+								<ChatGroupByDate groupDate={date}/>	
 								<div ref={messagesEndRef} />
 							</div>
 						)
@@ -151,6 +183,7 @@ const Chat = () => {
 			</div>
 			}
 			<Toaster position="top-center" reverseOrder={false}/>
+			<ChannelDetails/>
 		</>
 	);
 };
