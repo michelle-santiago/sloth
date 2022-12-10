@@ -41,7 +41,7 @@ const Navbar = () => {
             toast.error(err.response.data.errors[0])
         }); 
     },[])
-
+ 
   return (
     <>
     <div className="flex bg-secondary p-1">
