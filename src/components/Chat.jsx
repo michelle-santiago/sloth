@@ -1,11 +1,41 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { UserContext } from "../hooks/UserContext";
-
+import ChatGroupByDate from "./common/ChatGroupByDate";
+import dateFormat from "./helper/dateFormat";
 const Chat = () => {
 	const { userSelected,channelSelected, chatType, chat  } = useContext(UserContext);
 	//console.log("chat type: ", chatType)
 	//console.log("chat: ", chat)
 	//console.log("channel: ", channelSelected)
+	const today= new Date();
+	const yesterday= new Date(today);
+	yesterday.setDate(yesterday.getDate() - 1)
+    const dateToday=dateFormat(today);
+	const dateYesterday=dateFormat(yesterday);
+    //console.log("today",dateToday,"yesterday",dateYesterday)
+
+	const dates=[];
+
+	const addDay=((date)=>{
+		let found=false;
+		if(dates.length!==0){
+		  dates.forEach(dateData => {
+			if(dateData===date){
+			  found=true;
+			}
+		  });
+		}
+	
+		if(found===false){
+		  dates.push(date)
+		}
+	})
+
+	chat.forEach((message)=>{
+		//console.log("created at: ",message.created_at)
+		addDay(dateFormat(message.created_at))
+	})
+
 	return (
 		<>
 			{chatType!==""?
@@ -24,26 +54,21 @@ const Chat = () => {
 					</div>
 					{/* Chat messages */}
 					<div className="px-6 py-4 flex-1 overflow-y-scroll">
-						{chat.map((message,index)=>{
+					{dates.map((date)=>{
 						return(
-							<div key={index}>
-								<div className="flex items-start mb-4 text-sm">
-									<div className="avatar placeholder px-2">
-										<div className="bg-white-focus border  bg-base-300 text-neutral-content rounded-xl w-10 h-10">
-											<span className="text-primary">{message.sender.uid.toUpperCase().charAt(0)}</span>
-										</div>
-									</div> 
-									<div className="flex-1 overflow-hidden">
-										<div className="flex flex-row gap-2">
-											<span className="font-bold">{message.sender.uid}</span>
-											<span className="text-grey text-xs pt-0.5">{message.created_at}</span>
-										</div>
-										<p className="text-black leading-normal">{message.body}</p>
+							<> 
+								<div className="flex justify-center ">
+									<div className=" badge bg-white border-base-300 text-black font-bold p-3">
+										{date===dateToday&&"Today"}
+										{date===dateYesterday&&"Yesterday"}
+										{date!==dateToday&&date!==dateYesterday&&date}
 									</div>
 								</div>
-							</div>
+								<hr className="-mt-3"></hr>
+								<ChatGroupByDate groupDate={date}/>
+							</>
 						)
-						})}
+					})}
 						
 					</div>
 					<div className="px-7 bg-white border-t fixed bottom-0 w-full">
