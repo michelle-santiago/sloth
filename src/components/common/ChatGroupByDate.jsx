@@ -11,7 +11,7 @@ const ChatGroupByDate = ({groupDate}) => {
                 if(date===groupDate){
                     return(
                         <div key={index}>
-                            <div className="flex items-start mb-4 text-sm pt-5">
+                            <div className="flex items-start text-sm pt-3">
                                 <div className="avatar placeholder px-2">
                                     <div className="bg-white-focus border  bg-base-300 text-neutral-content rounded-xl w-10 h-10">
                                         <span className="text-primary">{message.sender.uid.toUpperCase().charAt(0)}</span>
