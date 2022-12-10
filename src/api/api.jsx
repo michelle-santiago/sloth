@@ -11,22 +11,17 @@ export const signIn = async ({ email, password }) => {
 }
 
 export const retrieveChannels = async (data) => {
-    const config = { method: "GET", headers: { "Content-Type": "application/json", ...data }};
-    const res = await fetch('http://206.189.91.54/api/v1/channels', config)
-
-    return await res.json()
+    const res= await axios.get('http://206.189.91.54/api/v1/channels', { headers: data })
+    return res.data
 }
 
 export const retrieveMsg= async (data,id,type) => {
-    const config = { method: "GET", headers: { "Content-Type": "application/json", ...data }};
-    const res = await fetch(`http://206.189.91.54/api/v1/messages?receiver_id=${id}&receiver_class=${type}`, config)
-    return await res.json()
+    const res = await  axios.get(`http://206.189.91.54/api/v1/messages?receiver_id=${id}&receiver_class=${type}`, { headers: data })
+    return await res.data
 }
 export const retrieveUsers = async (data) => {
-    const config = { method: "GET", headers: { "Content-Type": "application/json", ...data }};
-    const res = await fetch('http://206.189.91.54/api/v1/users', config)
-
-    return await res.json()
+    const res = await axios.get('http://206.189.91.54/api/v1/users', { headers: data })
+    return await res.data
 }
 
 export const sendMessage = async ({ data, receiver_id, receiver_class, body }) => {

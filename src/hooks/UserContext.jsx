@@ -11,7 +11,6 @@ export const UserContextProvider = ({ children }) => {
     const usersSelectedData = JSON.parse(sessionStorage.getItem("usersSelected"))
     const chatTypeData = JSON.parse(sessionStorage.getItem("chatTypeData"))
     const chatData = JSON.parse(sessionStorage.getItem("chatData"))
-    const [ userAuth, setUserAuth ] = useState(!userAuthenticated ? {} : userAuthenticated);
     const [ userAuthHeader, setUserAuthHeader ] =  useState(!userAuthenticated ? {} : userAuthenticated);
     const [ channel, setChannel]=useState(!userChannel ? [] : userChannel)
     const [ channelSelected, setChannelSelected]=useState(!channelSelectedData ? {} : channelSelectedData)
@@ -30,8 +29,6 @@ export const UserContextProvider = ({ children }) => {
     return (
         <UserContext.Provider
             value={{
-                userAuth,
-                setUserAuth,
                 userAuthHeader,
                 setUserAuthHeader,
                 updateUserAuthHeader,
