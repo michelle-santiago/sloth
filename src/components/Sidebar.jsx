@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import { UserContext } from "../hooks/UserContext";
 import AddChannel from "./common/AddChanel";
-import { retrieveChannels, retrieveMsg } from "../api/api";
+import { retrieveChannels, retrieveChannelDetails, retrieveMsg } from "../api/api";
 const Sidebar = () => {
-	const { userAuthHeader, channel, setChannel, setChatType, setChannelSelected, setChat, usersSelected, setUserSelected, setUsersSelected } = useContext(UserContext);
+	const { userAuthHeader, channel, setChannel, setChatType, channelSelected, setChannelSelected,setChannelDetails, setChat, usersSelected, setUserSelected, setUsersSelected } = useContext(UserContext);
     const user=userAuthHeader;
 	//console.log("User check side: ", user.uid);
     //console.log("channel: ",channel)
@@ -11,24 +11,32 @@ const Sidebar = () => {
     useEffect(()=>{
         retrieveChannels(user)
         .then((res) => {
-           //console.log("response:",res.data)
            sessionStorage.setItem("userChannels", JSON.stringify(res.data));
            setChannel(res.data)
         })
         .catch((err) => {
             toast.error(err.response.data.errors[0])
         });
-       
     },[])
 	
 	const handleSelectedChannel=(channel)=>{
 		setChatType("Channel")
 		sessionStorage.setItem("chatTypeData", JSON.stringify("Channel"));
-		console.log(channel)
+		//console.log(channel)
 		//console.log("channel id",channel.id)
 		sessionStorage.setItem("channelSelected", JSON.stringify(channel));
 		setChannelSelected(channel)
-		
+		//set channel details
+		retrieveChannelDetails(userAuthHeader,channel.id)
+		.then((res) => {
+			//console.log("channel details",res.data)
+			setChannelDetails(res.data)
+			sessionStorage.setItem("channelDetails", JSON.stringify(res.data));
+		})
+		.catch((err) => {
+			console.log(err)
+		});
+		//set chat 
 		retrieveMsg(userAuthHeader,channel.id,"Channel")
 		.then((res) => {
 		  //console.log("RESPONSE MSG:",res.data)
@@ -63,7 +71,7 @@ const Sidebar = () => {
 		const filteredUsers=usersSelected.filter((user)=>{
             return user.id !== userData.id
         })
-		console.log("filtered",filteredUsers)
+		//console.log("filtered",filteredUsers)
         setUsersSelected(filteredUsers);
         sessionStorage.setItem("usersSelected", JSON.stringify(filteredUsers));
 		

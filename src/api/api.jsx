@@ -29,3 +29,8 @@ export const sendMessage = async ({ data, receiver_id, receiver_class, body }) =
         {receiver_id, receiver_class, body},{ headers: data }
     )
 }
+
+export const retrieveChannelDetails= async (data,id) => {
+    const res = await axios.get(`http://206.189.91.54/api/v1/channels/${id}`, { headers: data })
+    return await res.data
+}

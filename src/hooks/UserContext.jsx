@@ -5,6 +5,7 @@ export const UserContextProvider = ({ children }) => {
     const userAuthenticated = JSON.parse(sessionStorage.getItem("loggedInUserAuth"))
     const userChannel = JSON.parse(sessionStorage.getItem("userChannels"))
     const channelSelectedData = JSON.parse(sessionStorage.getItem("channelSelected"))
+    const channelDetailsData = JSON.parse(sessionStorage.getItem("channelDetails"))
     const userID = JSON.parse(sessionStorage.getItem("userID"))
     const usersData = JSON.parse(sessionStorage.getItem("usersData"))
     const userSelectedData = JSON.parse(sessionStorage.getItem("userSelected"))
@@ -14,6 +15,7 @@ export const UserContextProvider = ({ children }) => {
     const [ userAuthHeader, setUserAuthHeader ] =  useState(!userAuthenticated ? {} : userAuthenticated);
     const [ channel, setChannel]=useState(!userChannel ? [] : userChannel)
     const [ channelSelected, setChannelSelected]=useState(!channelSelectedData ? {} : channelSelectedData)
+    const [ channelDetails, setChannelDetails]=useState(!channelDetailsData ? [] : channelDetailsData)
     const [id, setId] = useState(!userID ? "" : userID);
     const [ users, setUsers]=useState(!usersData ? "" : usersData);
     const [ userSelected, setUserSelected]=useState(!userSelectedData ? {} : userSelectedData);
@@ -38,6 +40,8 @@ export const UserContextProvider = ({ children }) => {
                 setChannel,
                 channelSelected,
                 setChannelSelected,
+                channelDetails,
+                setChannelDetails,
                 users,
                 setUsers,
                 userSelected,
