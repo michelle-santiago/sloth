@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { UserContext } from "../hooks/UserContext";
 import AddChannel from "./common/AddChanel";
-import { retrieveChannels, retrieveDirectMsg } from "../api/api";
+import { retrieveChannels, retrieveMsg } from "../api/api";
 const Sidebar = () => {
 	const { userAuthHeader, channel, setChannel, setChatType, setChannelSelected, setChat, usersSelected, setUserSelected, setUsersSelected } = useContext(UserContext);
     const user=userAuthHeader;
@@ -29,7 +29,7 @@ const Sidebar = () => {
 		sessionStorage.setItem("channelSelected", JSON.stringify(channel));
 		setChannelSelected(channel)
 		
-		retrieveDirectMsg(userAuthHeader,channel.id,"Channel")
+		retrieveMsg(userAuthHeader,channel.id,"Channel")
 		.then((res) => {
 		  //console.log("RESPONSE MSG:",res.data)
 		  setChat(res.data)
@@ -47,7 +47,7 @@ const Sidebar = () => {
 		setUserSelected(user)
 		sessionStorage.setItem("userSelected", JSON.stringify(user));
 	
-		retrieveDirectMsg(userAuthHeader,user.id,"User")
+		retrieveMsg(userAuthHeader,user.id,"User")
 		.then((res) => {
 		  //console.log("RESPONSE MSG:",res.data)
 		  setChat(res.data)

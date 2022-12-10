@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 export let UserContext = createContext({});
 
 export const UserContextProvider = ({ children }) => {
@@ -26,7 +26,7 @@ export const UserContextProvider = ({ children }) => {
 		sessionStorage.setItem("loggedInUserAuth", JSON.stringify(data));
 		setUserAuthHeader(data);
 	};
-
+    
     return (
         <UserContext.Provider
             value={{
