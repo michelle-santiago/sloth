@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { UserContext } from '../../hooks/UserContext';
 import ProfileModal from './ProfileModal';
-import { retrieveDirectMsg} from "../../api/api";
+import { retrieveMsg} from "../../api/api";
 const SearchModal = () => {
   const { userAuthHeader, users, setUserSelected, usersSelected, setUsersSelected, setChatType, setChat } = useContext(UserContext);
   const [ usersList, setUsersList ]=useState([])
@@ -26,7 +26,7 @@ const SearchModal = () => {
     setUserSelected(user)
     sessionStorage.setItem("userSelected", JSON.stringify(user));
 
-    retrieveDirectMsg(userAuthHeader,user.id,"User")
+    retrieveMsg(userAuthHeader,user.id,"User")
     .then((res) => {
       //console.log("RESPONSE MSG:",res.data)
       setChat(res.data)
