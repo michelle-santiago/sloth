@@ -7,7 +7,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import ChannelDetails from "./channel/ChannelDetails"
 import getUid from "./helper/getUid";
 const Chat = () => {
-	const { userAuthHeader, users, userSelected, channelSelected,channelDetails, chatType, chat, setChat  } = useContext(UserContext);
+	const { userAuthHeader, userSelected, channelSelected, channelDetails, chatType, chat, setChat, setAddMemberType } = useContext(UserContext);
 	const [messageBody, setMessageBody]=useState("")
 	const messagesEndRef = useRef(null)
 	const [scroll, setScroll]=useState(null)
@@ -93,7 +93,6 @@ const Chat = () => {
 	const handleChange = (e) => {
 		setMessageBody(e.target.value)
 	}
-	//channel details
 
 	return (
 		<>
@@ -102,7 +101,7 @@ const Chat = () => {
 			{/* Chat content */}
 				<div className="flex-1 flex flex-col bg-white pb-10">
 					{/* Channel/User */}
-					<div className="border-b flex px-6 py-2 ">
+					<div className="border-b flex px-6 py-2">
 						<div className="flex flex-row items-space-between justify-center items-center w-full">
 							<div className="flex:1 w-full text-grey-darkest mb-1 cursor-pointer hover:text-info">
 								<span className="font-extrabold text-xl">
@@ -113,8 +112,8 @@ const Chat = () => {
 								</span>
 							</div>
 							{chatType==="Channel"&&
-								<label htmlFor="channel-details-modal" className="flex flex-row gap-2 border p-2 cursor-pointer hover:bg-base-200">
-									<div className="flex ">
+								<label htmlFor="channel-details-modal" className="flex flex-row justify-center items-center gap-2 border p-2 cursor-pointer hover:bg-base-200">
+									<div className="flex" title="View Members">
 										{channelDetails.length!==0&&
 										channelDetails.channel_members.map((member,index)=>{
 											if(index===1||index===0||index===2){
@@ -137,6 +136,11 @@ const Chat = () => {
 									</div>
 								</label>
 							}
+							<label htmlFor="add-channel" className="p-3 ml-2 border cursor-pointer hover:bg-base-200" title="Add Member" onClick={()=>{setAddMemberType("AddMember")}}>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+									<path d="M11 5a3 3 0 11-6 0 3 3 0 016 0zM2.615 16.428a1.224 1.224 0 01-.569-1.175 6.002 6.002 0 0111.908 0c.058.467-.172.92-.57 1.174A9.953 9.953 0 018 18a9.953 9.953 0 01-5.385-1.572zM16.25 5.75a.75.75 0 00-1.5 0v2h-2a.75.75 0 000 1.5h2v2a.75.75 0 001.5 0v-2h2a.75.75 0 000-1.5h-2v-2z" />
+								</svg>
+							</label>
 						</div>
 						
 						
@@ -176,9 +180,11 @@ const Chat = () => {
 			</>
 			:
 			<div className="flex-1 flex flex-col bg-white">
-				<div className="border-b flex px-6 py-2 items-center flex-none">
+				<div className="border-b flex px-6 py-2 pt-3 pb-3 items-center flex-none">
 					<div className="flex flex-col">
-						<h3 className="text-grey-darkest mb-1 font-extrabold">Welcome</h3>
+						<h3 className="text-grey-darkest mb-1 font-extrabold">
+							<span className="font-extrabold text-xl">Welcome</span>
+						</h3>
 						<div className="text-grey-dark text-sm truncate"></div>
 					</div>
 				</div>

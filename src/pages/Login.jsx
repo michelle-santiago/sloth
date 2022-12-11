@@ -33,7 +33,7 @@ const Login = () => {
             });
             setId(res.data.data.id);
             sessionStorage.setItem("userID", JSON.stringify(res.data.data.id));
-            toast.success("Login Successful")
+            //toast.success("Login Successful")
             navigate("/home");
         })
         .catch((err) => {

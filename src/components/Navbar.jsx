@@ -19,7 +19,8 @@ const Navbar = () => {
 
     const logoutConfirmation = (confirm) => {
     if (confirm) {
-        sessionStorage.removeItem("loggedInUserAuth");
+        //sessionStorage.removeItem("loggedInUserAuth");
+        sessionStorage.clear();
         navigate("/login");
     } else {
         handleDialog("", false);
@@ -27,7 +28,7 @@ const Navbar = () => {
     };
 
     const handleLogout = () => {
-    handleDialog("Are you sure you want to sign out?", true);
+        handleDialog("Are you sure you want to sign out?", true);
     };
 
     useEffect(()=>{

@@ -3,7 +3,7 @@ import { UserContext } from "../hooks/UserContext";
 import AddChannel from "./channel/AddChanel"
 import { retrieveChannels, retrieveChannelDetails, retrieveMsg } from "../api/api";
 const Sidebar = () => {
-	const { userAuthHeader, channel, setChannel, setChatType, channelSelected, setChannelSelected,setChannelDetails, setChat, usersSelected, setUserSelected, setUsersSelected } = useContext(UserContext);
+	const { userAuthHeader, channel, setChannel, setChatType, setChannelSelected,setChannelDetails, setChat, usersSelected, setUserSelected, setUsersSelected, setAddMemberType } = useContext(UserContext);
     const user=userAuthHeader;
 	//console.log("User check side: ", user.uid);
     //console.log("channel: ",channel)
@@ -91,7 +91,7 @@ const Sidebar = () => {
 			<div className="mb-8">
 				<div className="px-4 mb-2 text-white flex justify-between items-center">
 					<div className="opacity-75">Channels</div>
-					<label htmlFor="add-channel" className="cursor-pointer hover:bg-base-300 p-1" title="Add Channel">
+					<label htmlFor="add-channel" className="cursor-pointer hover:bg-base-300 p-1" title="Add Channel" onClick={()=>{ setAddMemberType("AddChannel")}}>
 						<svg className="fill-current h-5 w-5 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
 							<path d="M11 9h4v2h-4v4H9v-4H5V9h4V5h2v4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z" />
 						</svg>
