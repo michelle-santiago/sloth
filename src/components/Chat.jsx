@@ -112,31 +112,33 @@ const Chat = () => {
 									}
 								</span>
 							</div>
-							
-							<label htmlFor="channel-details-modal" className="flex flex-row gap-2 border p-2 cursor-pointer hover:bg-base-200">
-								<div className="flex ">
-									{channelDetails.length!==0&&
-									channelDetails.channel_members.map((member,index)=>{
-										if(index===1||index===0||index===2){
-											return(
-												<div key={index}>
-													<div className="flex items-center bg-base-300 justify-center w-7 h-7 -mx-1 overflow-hidden rounded-xl border-2 border-white">
-														<span>{getUid(member.user_id).toUpperCase().charAt(0)}</span>
+							{chatType==="Channel"&&
+								<label htmlFor="channel-details-modal" className="flex flex-row gap-2 border p-2 cursor-pointer hover:bg-base-200">
+									<div className="flex ">
+										{channelDetails.length!==0&&
+										channelDetails.channel_members.map((member,index)=>{
+											if(index===1||index===0||index===2){
+												return(
+													<div key={index}>
+														<div className="flex items-center bg-base-300 justify-center w-7 h-7 -mx-1 overflow-hidden rounded-xl border-2 border-white">
+															<span>{getUid(member.user_id).toUpperCase().charAt(0)}</span>
+														</div>
 													</div>
-												</div>
-											)
+												)
+											}
+											
+										})
 										}
-										
-									})
+									</div>
+									<div className="flex justify-center items-center"> 
+									{chatType==="Channel"&&
+										<div className="text-grey-dark text-sm">{channelDetails.length!==0&&channelDetails.channel_members.length}</div>
 									}
-								</div>
-								<div className="flex justify-center items-center"> 
-								{chatType==="Channel"&&
-									<div className="text-grey-dark text-sm">{channelDetails.length!==0&&channelDetails.channel_members.length}</div>
-								}
-								</div>
-							</label>
+									</div>
+								</label>
+							}
 						</div>
+						
 						
 					</div>
 					{/* Chat messages */}

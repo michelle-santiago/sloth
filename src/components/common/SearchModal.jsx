@@ -3,7 +3,7 @@ import { UserContext } from '../../hooks/UserContext';
 import ProfileModal from './ProfileModal';
 import { retrieveMsg} from "../../api/api";
 const SearchModal = () => {
-  const { userAuthHeader, users, setUserSelected, usersSelected, setUsersSelected, setChatType, setChat } = useContext(UserContext);
+  const { userAuthHeader, users, setUserSelected, usersSelected, setChatType, setChat } = useContext(UserContext);
   const [ usersList, setUsersList ]=useState([])
   const handleSearch = (e) => {
     const search = e.target.value;
@@ -55,7 +55,7 @@ const SearchModal = () => {
     <>
     <input type="checkbox" id="search-modal" className="modal-toggle" />
     <div className="modal">
-      <div className="card fixed top-0.5 p-0 w-[70%] bg-white">
+      <div className="rounded fixed top-0.5 p-0 w-[70%] bg-white">
         <div className="px-4 py-4 flex flex-row items-center gap-2 border-b">
             <div>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -75,12 +75,12 @@ const SearchModal = () => {
             </label>
             
         </div>
-        <div className="rounded px-7 my-2 pin-t pin-l h-40 overflow-y-scroll">
+        <div className="rounded pin-t pin-l h-40 overflow-y-scroll">
             <ul className="list-reset">
               {usersList.map((user)=>{
                 return(
-                <li key={user.uid} >
-                  <label htmlFor="search-modal" className="p-2 block text-black hover:bg-grey-light cursor-pointer hover:text-primary"
+                <li key={user.uid} className="w-full hover:bg-neutral">
+                  <label htmlFor="search-modal" className="px-7 p-2 block text-black cursor-pointer hover:text-white"
                       onClick={()=>{handleSelectedUser(user)}}>
                     {user.uid}
                   </label>

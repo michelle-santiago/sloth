@@ -91,17 +91,13 @@ const Sidebar = () => {
 			<div className="mb-8">
 				<div className="px-4 mb-2 text-white flex justify-between items-center">
 					<div className="opacity-75">Channels</div>
-					<label htmlFor="add-channel" className="cursor-pointer">
-						<svg
-							className="fill-current h-4 w-4 opacity-50"
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 20 20"
-						>
+					<label htmlFor="add-channel" className="cursor-pointer hover:bg-base-300 p-1" title="Add Channel">
+						<svg className="fill-current h-5 w-5 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
 							<path d="M11 9h4v2h-4v4H9v-4H5V9h4V5h2v4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z" />
 						</svg>
 					</label>
 				</div>
-				<div className="h-50 overflow-y-scroll mr-1">
+				<div className="h-40 overflow-y-scroll mr-1">
 					<ul>
 						{channel.length!==0&&channel.map((channel,index) => {
 							return (
@@ -112,10 +108,9 @@ const Sidebar = () => {
 												<path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
 											</svg>
 										</div>
-										<div className="bg-teal-dark py-1 text-white opacity-75"
-										 	>
+										<div className="bg-teal-dark py-1 text-white opacity-75">
 											{channel.name}
-											</div>
+										</div>
 									</div>
 								</li>
 							)
@@ -140,10 +135,10 @@ const Sidebar = () => {
 												</div>
 											</div> 
 										</div>
-										<div className="bg-teal-dark py-1 text-white opacity-75 w-[65%]" >
+										<div className="bg-teal-dark py-1 opacity-75 w-[65%] hover:text-white" >
 											<div className="flex flex-row gap-2">
-												<span className="truncate" onClick={()=>{ handleSelectedUser(user)}} >{user.uid}</span>	
-												<div className="bg-secondary hover:bg-base-300"  onClick={()=>{ handleDeleteSelectedUser(user)}}>
+												<span className="truncate text-white" onClick={()=>{ handleSelectedUser(user)}} >{user.uid}</span>	
+												<div className="hover:bg-base-300"  onClick={()=>{ handleDeleteSelectedUser(user)}}>
 													<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
 														<path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
 													</svg>

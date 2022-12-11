@@ -30,6 +30,12 @@ export const sendMessage = async ({ data, receiver_id, receiver_class, body }) =
     )
 }
 
+export const createChannel = async ({ data, name, user_ids }) => {
+    return await axios.post('http://206.189.91.54/api/v1/channels', 
+        { name, user_ids },{ headers: data }
+    )
+}
+
 export const retrieveChannelDetails= async (data,id) => {
     const res = await axios.get(`http://206.189.91.54/api/v1/channels/${id}`, { headers: data })
     return await res.data
