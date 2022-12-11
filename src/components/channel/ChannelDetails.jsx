@@ -26,7 +26,7 @@ const ChannelDetails = () => {
                     <hr className='mt-2 mb-2'></hr>
                     <div className='flex flex-col'>
                         <span className='font-bold'>Created by </span>
-                        <span>{getUid(channelDetails.owner_id)} on {dateFormatYear(channelDetails.created_at)}</span>
+                        <span className='px-2'>{getUid(channelDetails.owner_id)} on {dateFormatYear(channelDetails.created_at)}</span>
                     </div>
                     <hr className='mt-2 mb-2'></hr>
                     <div className='font-bold'>Members:</div>

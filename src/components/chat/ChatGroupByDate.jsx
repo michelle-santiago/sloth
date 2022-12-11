@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { UserContext } from '../../hooks/UserContext';
 import dateFormat from '../helper/dateFormat';
-import timeFormat from '../helper/timeFormat';
+import timeFormat from '../helper/timeFormat'
 const ChatGroupByDate = ({groupDate}) => {
     const { chat } = useContext(UserContext);
     return(
