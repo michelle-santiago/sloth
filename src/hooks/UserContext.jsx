@@ -24,6 +24,7 @@ export const UserContextProvider = ({ children }) => {
     const [ chatType, setChatType]=useState(!chatTypeData ? "" : chatTypeData);
     const [ chat, setChat]=useState(!chatData ? [] : chatData);
     const [ membersSelected, setMembersSelected]=useState(!membersSelectedData ? [] : membersSelectedData);
+    const [ addMemberType, setAddMemberType]=useState("")
 
     const updateUserAuthHeader = (data) => {
 		sessionStorage.setItem("loggedInUserAuth", JSON.stringify(data));
@@ -55,7 +56,9 @@ export const UserContextProvider = ({ children }) => {
                 chat,
                 setChat,
                 membersSelected,
-                setMembersSelected
+                setMembersSelected,
+                addMemberType,
+                setAddMemberType,
             }}
         >
             { children }
