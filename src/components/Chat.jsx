@@ -6,6 +6,7 @@ import { sendMessage, retrieveMsg } from "../api/api";
 import toast, { Toaster } from 'react-hot-toast';
 import ChannelDetails from "./channel/ChannelDetails"
 import getUid from "./helper/getUid";
+import NewMessageSearch from "./chat/NewMessageSearch";
 const Chat = () => {
 	const { userAuthHeader, userSelected, channelSelected, channelDetails, chatType, chat, setChat, setAddMemberType } = useContext(UserContext);
 	const [messageBody, setMessageBody]=useState("")
@@ -110,9 +111,11 @@ const Chat = () => {
 									{chatType==="Channel"&&
 										<label htmlFor="channel-details-modal">{channelSelected.name}</label>
 									}
+									{chatType==="New"&&"New Message"}
 								</span>
 							</div>
 							{chatType==="Channel"&&
+							<>
 								<label htmlFor="channel-details-modal" className="flex flex-row justify-center items-center gap-2 border p-2 cursor-pointer hover:bg-base-200">
 									<div className="flex" title="View Members">
 										{channelDetails.length!==0&&
@@ -125,8 +128,7 @@ const Chat = () => {
 														</div>
 													</div>
 												)
-											}
-											
+											}		
 										})
 										}
 									</div>
@@ -136,45 +138,67 @@ const Chat = () => {
 									}
 									</div>
 								</label>
-							}
 							<label htmlFor="add-channel" className="p-3 ml-2 border cursor-pointer hover:bg-base-200" title="Add Member" onClick={()=>{setAddMemberType("AddMember")}}>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
-									<path d="M11 5a3 3 0 11-6 0 3 3 0 016 0zM2.615 16.428a1.224 1.224 0 01-.569-1.175 6.002 6.002 0 0111.908 0c.058.467-.172.92-.57 1.174A9.953 9.953 0 018 18a9.953 9.953 0 01-5.385-1.572zM16.25 5.75a.75.75 0 00-1.5 0v2h-2a.75.75 0 000 1.5h2v2a.75.75 0 001.5 0v-2h2a.75.75 0 000-1.5h-2v-2z" />
-								</svg>
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+								<path d="M11 5a3 3 0 11-6 0 3 3 0 016 0zM2.615 16.428a1.224 1.224 0 01-.569-1.175 6.002 6.002 0 0111.908 0c.058.467-.172.92-.57 1.174A9.953 9.953 0 018 18a9.953 9.953 0 01-5.385-1.572zM16.25 5.75a.75.75 0 00-1.5 0v2h-2a.75.75 0 000 1.5h2v2a.75.75 0 001.5 0v-2h2a.75.75 0 000-1.5h-2v-2z" />
+							</svg>
 							</label>
-						</div>
-						
-						
+							</>
+							}
+							
+						</div>		
 					</div>
 					{/* Chat messages */}
-					<div className="px-6 py-4 flex-1 overflow-y-scroll pb-7">
-					{dates.map((date,index)=>{
-						return(
-							<div key={index}> 
-								<div className="flex justify-center ">
-									<div className=" badge bg-white border-base-300 text-black font-bold p-3">
-										{date===dateToday&&"Today"}
-										{date===dateYesterday&&"Yesterday"}
-										{date!==dateToday&&date!==dateYesterday&&date}
+					{chatType!=="New"&&
+						<div className="px-6 py-4 flex-1 overflow-y-scroll pb-7">
+							{dates.map((date,index)=>{
+								return(
+									<div key={index}> 
+										<div className="flex justify-center ">
+											<div className=" badge bg-white border-base-300 text-black font-bold p-3">
+												{date===dateToday&&"Today"}
+												{date===dateYesterday&&"Yesterday"}
+												{date!==dateToday&&date!==dateYesterday&&date}
+											</div>
+										</div>
+										<hr className="-mt-3.5"></hr>
+										<ChatGroupByDate groupDate={date}/>	
+										<div ref={messagesEndRef} />
 									</div>
-								</div>
-								<hr className="-mt-3.5"></hr>
-								<ChatGroupByDate groupDate={date}/>	
-								<div ref={messagesEndRef} />
-							</div>
-						)
-					})}
-					</div>
+								)
+							})}
+						</div>
+					}
+					{chatType==="New"&&
+						<div className="px-5">
+							<NewMessageSearch/>
+						</div>
+					}
 					<div className="px-7 bg-white border-t fixed bottom-0 w-full">
 						<div className="pt-2 pb-2  w-[80%] ">
-							<form className="flex rounded-lg border-2 border-grey overflow-hidden" onSubmit={handleSubmit}>
-								<input type="text" className="w-full px-4 focus:outline-none" placeholder="Message" value={messageBody} onChange={handleChange}/>
-								<button type="submit" className="cursor-pointer text-3xl text-grey border-l-2 border-grey p-2" onSubmit={handleSubmit}>
+							{chatType!=="New"?
+								<form className="flex rounded-lg border-2 border-grey overflow-hidden" onSubmit={handleSubmit}>
+									<input type="text" className="w-full px-4 focus:outline-none" placeholder="Message" value={messageBody} onChange={handleChange}/>
+									<button type="submit" className="cursor-pointer text-3xl text-grey border-l-2 border-grey p-2" onSubmit={handleSubmit}>
 									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 hover:text-primary">
 										<path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
 									</svg>
-								</button>
-							</form>
+									</button>
+								</form>
+
+							:
+								<div className="flex rounded-lg border-2 border-grey overflow-hidden">
+									<input type="text" className="w-full px-4 focus:outline-none" placeholder="Message"/>
+									<button type="submit" className="cursor-pointer text-3xl text-grey border-l-2 border-grey p-2">
+									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 hover:text-primary">
+										<path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+									</svg>
+									</button>
+								</div>	
+							}
+							
+									
+							
 						</div>
 					</div>
 				</div>
