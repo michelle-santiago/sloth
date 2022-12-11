@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { UserContext } from "../hooks/UserContext";
-import AddChannel from "./common/AddChanel";
+import AddChannel from "./channel/AddChanel"
 import { retrieveChannels, retrieveChannelDetails, retrieveMsg } from "../api/api";
 const Sidebar = () => {
 	const { userAuthHeader, channel, setChannel, setChatType, channelSelected, setChannelSelected,setChannelDetails, setChat, usersSelected, setUserSelected, setUsersSelected } = useContext(UserContext);

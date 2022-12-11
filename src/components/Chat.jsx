@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { UserContext } from "../hooks/UserContext";
-import ChatGroupByDate from "./common/ChatGroupByDate";
+import ChatGroupByDate from "./chat/ChatGroupByDate";
 import dateFormat from "./helper/dateFormat";
 import { sendMessage, retrieveMsg } from "../api/api";
 import toast, { Toaster } from 'react-hot-toast';
-import ChannelDetails from "./common/ChannelDetails";
+import ChannelDetails from "./channel/ChannelDetails"
 import getUid from "./helper/getUid";
 const Chat = () => {
 	const { userAuthHeader, users, userSelected, channelSelected,channelDetails, chatType, chat, setChat  } = useContext(UserContext);
