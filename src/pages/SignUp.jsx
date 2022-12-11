@@ -43,7 +43,7 @@ const SignUp = () => {
      <>
         <div className="min-h-full h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 z-9">
             <div className="relative flex flex-1 flex-col items-center justify-center pt-12 pb-16">
-                <h1 className="">Create your slack account</h1>
+                <h1 className="">Create your "slack" account</h1>
                 <form className="w-full max-w-sm" onSubmit={handleSubmit}>
                     <div className="mb-6">
                         {fields.map((field,index) =>
@@ -63,7 +63,7 @@ const SignUp = () => {
                         </div>
                         )}
                     </div>
-                    <button type="submit" className="inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 bg-slate-900 text-white hover:bg-slate-700 w-full" onSubmit={ handleSubmit }>
+                    <button type="submit" className="inline-flex bg-primary justify-center rounded-lg text-sm font-semibold py-2.5 px-4 text-white hover:bg-secondary w-full" onSubmit={ handleSubmit }>
                         Sign Up
                     </button>
                     <div className="pt-5 space-y-4 text-sm text-gray-900 sm:flex sm:items-center sm:justify-center sm:space-y-0 sm:space-x-4">
