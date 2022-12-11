@@ -5,6 +5,7 @@ const SearchMember = () => {
     const {  users, membersSelected, setMembersSelected } = useContext(UserContext);
     const [membersList,setMembersList]=useState([])
     const [members, setMembers]=useState()
+    const [searchValue, setSearchValue]=useState("")
 
     //reset selected members at the start
     useEffect(()=>{
@@ -25,6 +26,7 @@ const SearchMember = () => {
 
     const handleSearch = (e) => {
         const search = e.target.value;
+        setSearchValue(search)
         const membersResult= users.filter((value) => {
           return value.uid.toLowerCase().includes(search.toLowerCase())
         })
@@ -62,7 +64,8 @@ const SearchMember = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                 </div>
-                <input placeholder="Search for a member" className="rounded h-8 w-full focus:outline-none" onChange={handleSearch}/>
+                <input placeholder="Search for a member" className="rounded h-8 w-full focus:outline-none" value={searchValue} onChange={handleSearch}/>
+                <span className='cursor-pointer text-sm' onClick={()=>{setSearchValue(""); setMembersList([])}}>Clear</span>
                 <div className="cursor-pointer" title="Close">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />

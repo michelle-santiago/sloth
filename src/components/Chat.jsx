@@ -79,6 +79,7 @@ const Chat = () => {
 							setChat(res.data)
 							sessionStorage.setItem("chatData", JSON.stringify(res.data));
 							setScroll(true)
+							setMessageBody("")
 						})
 						.catch((err) => {
 							console.log(err)
@@ -167,7 +168,7 @@ const Chat = () => {
 					<div className="px-7 bg-white border-t fixed bottom-0 w-full">
 						<div className="pt-2 pb-2  w-[80%] ">
 							<form className="flex rounded-lg border-2 border-grey overflow-hidden" onSubmit={handleSubmit}>
-								<input type="text" className="w-full px-4 focus:outline-none" placeholder="Message" onChange={handleChange}/>
+								<input type="text" className="w-full px-4 focus:outline-none" placeholder="Message" value={messageBody} onChange={handleChange}/>
 								<button type="submit" className="cursor-pointer text-3xl text-grey border-l-2 border-grey p-2" onSubmit={handleSubmit}>
 									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 hover:text-primary">
 										<path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
