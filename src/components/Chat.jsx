@@ -8,10 +8,16 @@ import ChannelDetails from "./channel/ChannelDetails"
 import getUid from "./helper/getUid";
 import NewMessageSearch from "./chat/NewMessageSearch";
 const Chat = () => {
-	const { userAuthHeader, userSelected, channelSelected, channelDetails, chatType, chat, setChat, setAddMemberType } = useContext(UserContext);
+	const { userAuthHeader, userSelected, channelSelected, channelDetails, chatType, chat, setChat, setChatType,setChannelDetails, setAddMemberType } = useContext(UserContext);
 	const [messageBody, setMessageBody]=useState("")
 	const messagesEndRef = useRef(null)
 	const [scroll, setScroll]=useState(null)
+
+	useEffect(()=>{
+		setChat([])
+		setChatType("")
+		setChannelDetails([])
+	},[])
 
 	//setting date with today and yesterday
 	const today= new Date();
@@ -118,7 +124,7 @@ const Chat = () => {
 							<>
 								<label htmlFor="channel-details-modal" className="flex flex-row justify-center items-center gap-2 border p-2 cursor-pointer hover:bg-base-200">
 									<div className="flex" title="View Members">
-										{channelDetails.length!==0&&
+										{channelDetails&&channelDetails.length!==0&&
 										channelDetails.channel_members.map((member,index)=>{
 											if(index===1||index===0||index===2){
 												return(
