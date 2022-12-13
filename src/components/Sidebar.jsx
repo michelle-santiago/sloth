@@ -11,8 +11,16 @@ const Sidebar = () => {
     useEffect(()=>{
         retrieveChannels(user)
         .then((res) => {
-           sessionStorage.setItem("userChannels", JSON.stringify(res.data));
-           setChannel(res.data)
+		   //console.log(res.errors)
+		   //console.log(res)
+		   if(res.errors==="No available channels."){
+			sessionStorage.setItem("userChannels", JSON.stringify([]));
+			setChannel([])
+		   }else{
+			sessionStorage.setItem("userChannels", JSON.stringify(res.data));
+			setChannel(res.data)
+		   }
+           
         })
         .catch((err) => {
             toast.error(err.response.data.errors[0])
