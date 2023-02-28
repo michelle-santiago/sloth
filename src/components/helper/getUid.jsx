@@ -1,10 +1,10 @@
-import React,{ useContext } from 'react'
-import { UserContext } from '../../hooks/UserContext';
-const getUid = (id) => {
-    const { users  } = useContext(UserContext);
+
+//gives the email of user (Uid)
+const getUid = (users, id) => {
+
     if(users){
-        const usersResult= users.find((user) => {
-            if(user.id===id){
+        const usersResult = users.find((user) => {
+            if(user.id === id){
                 return user
             }
         })

@@ -3,11 +3,11 @@ import SearchModal from './common/SearchModal'
 import { useNavigate } from 'react-router';
 import Dialog from './common/Dialog';
 import { UserContext } from "../hooks/UserContext";
-import { retrieveUsers} from "../api/api";
+
 const Navbar = () => {
     const navigate=useNavigate();
-    const { userAuthHeader, setUsers } = useContext(UserContext);
-    const user=userAuthHeader;
+    const { userAuthHeader } = useContext(UserContext);
+     const user = userAuthHeader;
     const [dialogue, setDialogue] = useState({
         message: "",
         isLoading: false,
@@ -31,18 +31,6 @@ const Navbar = () => {
         handleDialog("Are you sure you want to sign out?", true);
     };
 
-    useEffect(()=>{
-        retrieveUsers(user)
-        .then((res) => {
-           //console.log("response users:",res.data)
-           sessionStorage.setItem("usersData", JSON.stringify(res.data));
-           setUsers(res.data)
-        })
-        .catch((err) => {
-            toast.error(err.response.data.errors[0])
-        }); 
-    },[])
- 
   return (
     <>
     <div className="flex bg-secondary p-1">
